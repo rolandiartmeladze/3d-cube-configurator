@@ -2,11 +2,17 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link rel="stylesheet" href="style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>3d-cube-configurator</title>
   </head>
   <body>
-    <canvas id="webgl"></canvas>
+    <div class="container">
+      <canvas class="canvas" id="webgl"></canvas>
+      <div class="controls-panel">
+        <h1>Configuration details</h1>
+      </div>
+    </div>
     <script type="module" src="main.js" defer></script>
   </body>
 </html>
