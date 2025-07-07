@@ -35,3 +35,17 @@ The development environment for this project is now fully prepared for building 
 - **HTML/CSS** – modern, flexbox-based responsive layout
 - **Vanilla JS** – lightweight interaction logic
 - *(Optional: dat.GUI or custom UI controls in future iterations)*
+
+---
+
+## 📁 Folder Structure
+
+```bash
+├── index.html
+├── main.js
+├── jsconfig.json
+├── style.css
+├── README.md
+├── package.json
+
+```
