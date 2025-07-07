@@ -25,3 +25,13 @@ The development environment for this project is now fully prepared for building 
 - 🧰 **Customizable UI panel** for parameter control
 - 📱 **Responsive layout** with split view:
 - 🧪 Prepared for further enhancements like lighting, materials, or model import
+
+---
+
+## 🛠️ Tech Stack
+
+- **Three.js** – core 3D rendering library
+- **Vite** – fast development/build tool
+- **HTML/CSS** – modern, flexbox-based responsive layout
+- **Vanilla JS** – lightweight interaction logic
+- *(Optional: dat.GUI or custom UI controls in future iterations)*
