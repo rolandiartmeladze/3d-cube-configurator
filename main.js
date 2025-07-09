@@ -4,6 +4,9 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 const canvas = document.querySelector('#webgl');
 const scene = new THREE.Scene();
 
+const textureSelect = document.querySelector('#textureSelect');
+const textureLoader = new THREE.TextureLoader();
+
 const camera = new THREE.PerspectiveCamera(
   75,
   canvas.clientWidth / canvas.clientHeight,
@@ -22,13 +25,43 @@ const renderer = new THREE.WebGLRenderer({
 renderer.setSize(canvas.clientWidth, canvas.clientHeight, false);
 renderer.setPixelRatio(window.devicePixelRatio);
 
+const faceColors = [0xff0000, 0x00ff00, 0x0000ff, 0xffff00, 0xff00ff, 0x00ffff];
+const materials = faceColors.map(color => new THREE.MeshStandardMaterial({ color }));
 
 const geometry = new THREE.BoxGeometry(1, 1, 1);
-const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
 
-
-const cube = new THREE.Mesh(geometry, material);
+const cube = new THREE.Mesh(geometry, materials);
 scene.add(cube);
+
+const ambientLight = new THREE.AmbientLight(0xffffff, 1,5);
+scene.add(ambientLight);
+
+const textures = {
+  none: null,
+  wood: textureLoader.load('/textures/wood.jpg'),
+  metal: textureLoader.load('/textures/metal.jpg'),
+  ice: textureLoader.load('/textures/ice.jpg')
+};
+
+textureSelect.addEventListener('change', (event) => {
+  const selectedTexture = event.target.value;
+
+  if (textures[selectedTexture]) {
+    const texture = textures[selectedTexture];
+    const texturedMaterials = Array(6).fill().map(() =>
+      new THREE.MeshStandardMaterial({
+        map: texture,
+        color: 0xffffff
+      })
+    );
+    cube.material = texturedMaterials;
+  } else if (selectedTexture === 'none') {
+    cube.material = materials;
+  }
+
+  cube.material.forEach((mat) => mat.needsUpdate = true);
+});
+
 
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
