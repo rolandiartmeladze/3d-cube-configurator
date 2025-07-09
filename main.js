@@ -7,6 +7,8 @@ import { setupTextureSwitcher } from './ui/textureSwitcher.js';
 
 scene.add(cube);
 
+const canvas = document.querySelector('#webgl');
+
 function animate() {
   cube.rotation.x += 0.01;
   cube.rotation.y += 0.01;
@@ -17,8 +19,8 @@ function animate() {
 renderer.setAnimationLoop(animate);
 
 window.addEventListener('resize', () => {
-  const width = renderer.domElement.clientWidth;
-  const height = renderer.domElement.clientHeight;
+  const width = canvas.clientWidth;
+  const height = canvas.clientHeight;
   camera.aspect = width / height;
   camera.updateProjectionMatrix();
   renderer.setSize(width, height, false);

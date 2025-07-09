@@ -1,6 +1,15 @@
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import { camera } from './camera.js';
-import { renderer } from './renderer.js';
+import * as THREE from 'three';
 
-export const controls = new OrbitControls(camera, renderer.domElement);
-controls.enableDamping = true;
+const canvas = document.querySelector('#webgl');
+
+export const renderer = new THREE.WebGLRenderer({
+  canvas: canvas,
+  antialias: true,
+  alpha: true
+});
+
+const width = canvas.clientWidth;
+const height = canvas.clientHeight;
+
+renderer.setSize(width, height);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
