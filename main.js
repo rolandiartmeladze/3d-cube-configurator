@@ -7,6 +7,29 @@ const scene = new THREE.Scene();
 const textureSelect = document.querySelector('#textureSelect');
 const textureLoader = new THREE.TextureLoader();
 
+
+const texturePreview = document.getElementById('texturePreview');
+const textureLabel = document.getElementById('textureLabel');
+
+const previewInfo = {
+  none: {
+    src: '/textures/example.webp',
+    label: 'Colors Texture',
+  },
+  wood: {
+    src: '/textures/wood.jpg',
+    label: 'Wood Texture',
+  },
+  metal: {
+    src: '/textures/metal.jpg',
+    label: 'Metal Texture',
+  },
+  ice: {
+    src: '/textures/ice.jpg',
+    label: 'Ice Texture',
+  },
+};
+
 const camera = new THREE.PerspectiveCamera(
   75,
   canvas.clientWidth / canvas.clientHeight,
@@ -33,7 +56,7 @@ const geometry = new THREE.BoxGeometry(1, 1, 1);
 const cube = new THREE.Mesh(geometry, materials);
 scene.add(cube);
 
-const ambientLight = new THREE.AmbientLight(0xffffff, 1,5);
+const ambientLight = new THREE.AmbientLight(0xffffff, 1, 5);
 scene.add(ambientLight);
 
 const textures = {
@@ -60,6 +83,12 @@ textureSelect.addEventListener('change', (event) => {
   }
 
   cube.material.forEach((mat) => mat.needsUpdate = true);
+
+  const preview = previewInfo[selectedTexture];
+  if (preview) {
+    texturePreview.src = preview.src;
+    textureLabel.textContent = preview.label;
+  }
 });
 
 
