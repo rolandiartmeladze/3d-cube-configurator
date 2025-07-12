@@ -33,6 +33,8 @@ export function sphere({ hue = 0.565, lightnessMult = 0.015 } = {}) {
   mesh.userData.update = (time) => {
     const posAttr = mesh.geometry.attributes.position;
     const arr = posAttr.array;
+    const colorAttr = mesh.geometry.attributes.color;
+    const colorArr = colorAttr.array;
 
     // Animate vertex positions (wave motion)
     for (let i = 0; i < arr.length; i += 3) {
@@ -43,7 +45,19 @@ export function sphere({ hue = 0.565, lightnessMult = 0.015 } = {}) {
       arr[i + 1] = y + Math.sin(time * 0.006 + x * 2 + z * 2) * 0.1;
     }
     posAttr.needsUpdate = true;
-  }
+
+    const animatedHue = (hue + time * 0.0001) % 1;
+    for (let i = 0; i < len; i++) {
+      const z = -sphereGeo.attributes.position.getZ(i);
+      const { r, g, b } = new THREE.Color().setHSL(animatedHue, 1, z * lightnessMult);
+      const j = i * 3;
+      colorArr[j] = r;
+      colorArr[j + 1] = g;
+      colorArr[j + 2] = b;
+    }
+
+    colorAttr.needsUpdate = true;
+  };
 
   // Return the final mesh
   return mesh;
