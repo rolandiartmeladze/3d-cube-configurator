@@ -14,7 +14,8 @@ export function initText() {
     const getSphere = sphere({ hue: 0.55 });
     scene.add(getSphere);
 
-    function animate() {
+    function animate(time) {
+        getSphere.userData.update(time);
         controls.update();
         renderer.render(scene, camera);
     }
