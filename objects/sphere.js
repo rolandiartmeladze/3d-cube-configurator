@@ -6,6 +6,7 @@ import * as THREE from "three";
 // Create a background sphere using IcosahedronGeometry
 export function sphere({ hue = 0.565, lightnessMult = 0.015 } = {}) {
   const sphereGeo = new THREE.IcosahedronGeometry(3.5, 4);
+  const initialPositions = sphereGeo.attributes.position.array.slice();
 
   // Use a basic material with vertex colors and visible inner surface
   const sphereMat = new THREE.MeshBasicMaterial({
@@ -27,6 +28,23 @@ export function sphere({ hue = 0.565, lightnessMult = 0.015 } = {}) {
   // Apply vertex colors to the geometry
   sphereGeo.setAttribute("color", new THREE.Float32BufferAttribute(sphereColors, 3));
 
+  const mesh = new THREE.Mesh(sphereGeo, sphereMat);
+
+  mesh.userData.update = (time) => {
+    const posAttr = mesh.geometry.attributes.position;
+    const arr = posAttr.array;
+
+    // Animate vertex positions (wave motion)
+    for (let i = 0; i < arr.length; i += 3) {
+      const x = initialPositions[i];
+      const y = initialPositions[i + 1];
+      const z = initialPositions[i + 2];
+
+      arr[i + 1] = y + Math.sin(time * 0.006 + x * 2 + z * 2) * 0.1;
+    }
+    posAttr.needsUpdate = true;
+  }
+
   // Return the final mesh
-  return new THREE.Mesh(sphereGeo, sphereMat);
+  return mesh;
 }
