@@ -1,71 +1,39 @@
-## Interactive 3D Cube Configurator
+# ✨ Interactive 3D Cube Configurator with Animated Text
 
-This simple web application allows users to interactively visualize and configure a **3D** cube. It was developed to showcase my ability to utilize new technologies like **Three.js** and **Vanilla JavaScript** in creating modern, responsive web interfaces, serving as a practical demonstration of my capabilities.
-
----
-
-## 🚀 Project Setup & Current Status
-
-The development environment for this project is now fully prepared for building the core Three.js 3D scene and interactive configurator. Key setup steps include:
-
-- **Vite Integration:** Using Vite as a modern build tool for fast development and optimized production builds.
-- **Three.js Installation:** Three.js library integrated via npm for 3D graphics.
-- **IDE Configuration:** `jsconfig.json` added for enhanced developer experience and autocompletion in VS Code.
+This web-based application provides an interactive 3D visualization tool for configuring a **cube** and viewing a **glass-style 3D text** with animated outlines. It is built with **Three.js** and a modular architecture using **Vite** for fast development.
 
 ---
 
-## 🚀 Project Features
+## 🚀 Features
 
-- 🧱 **3D Cube Visualization** powered by Three.js
-- 🎨 **Real-time Configuration** for:
-  - Cube **color**
-  - **Size/scale** along X/Y/Z axes
-  - **Rotation speed**
-  - Geometry adjustments (e.g., corner radius)
-- 🧰 **Customizable UI panel** for parameter control
-- 📱 **Responsive layout** with split view:
-- 🧪 Prepared for further enhancements like lighting, materials, or model import
+### 🧱 Core 3D Elements
+
+- **Interactive 3D Cube**
+  - Customizable size, rotation, and texture
+  - Real-time updates
+- **Animated 3D Text Component**
+  - Glass-like appearance using `MeshPhysicalMaterial`
+  - Smooth outline animation using `Line2`, `LineMaterial`, and `LineGeometry`
+  - Cyclical glow/fade effect synchronized with outline
+
+### 🧪 Visual & Interactive Design
+
+- Orbit controls (zoom, pan, rotate)
+- Animated background sphere with dynamic vertex colors
+- Live resizing support
+- Responsive and optimized for modern browsers
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **Three.js** – core 3D rendering library
-- **Vite** – fast development/build tool
-- **HTML/CSS** – modern, flexbox-based responsive layout
-- **Vanilla JS** – lightweight interaction logic
-- _(Optional: dat.GUI or custom UI controls in future iterations)_
-
----
-
-### 🎯 Modular Architecture
-
-The project is now structured in **modular ES modules**, each responsible for a specific part of the 3D scene. This includes:
-
-- `core/scene.js` – Scene setup with lights
-- `core/camera.js` – Perspective camera and dynamic aspect ratio
-- `core/renderer.js` – WebGL renderer with pixel-ratio and canvas sizing logic
-- `core/controls.js` – OrbitControls integration with damping
-- `objects/cube.js` – Cube geometry, materials, and texture update logic
-- `ui/textureSwitcher.js` – UI event listener for updating cube textures and preview panel
-
-### 🧱 Cube Enhancements
-
-- Added support for **default colored faces** or **dynamic textures** (wood, metal, ice)
-- Dynamic texture switching using a `<select>` dropdown in the UI
-- Texture preview (image + label) updates in real-time
-
-### 🖼️ Real-Time Rendering
-
-- Continuous animation loop using `renderer.setAnimationLoop`
-- Live rotation along `x` and `y` axes
-- Responsive resizing using `resize` listener with `clientWidth/clientHeight`
-
-### 🧩 Object-Oriented Expansion
-
-- Decoupled the logic into single-responsibility files
-- Created reusable `updateCubeMaterial()` function
-- Improved scalability and readability
+| Tool / Library    | Purpose                                |
+|-------------------|----------------------------------------|
+| **Three.js**      | 3D rendering engine                    |
+| **Vite**          | Build tool for fast development        |
+| **Vanilla JS**    | Logic, animation, and scene control    |
+| **HTML/CSS**      | Layout and canvas rendering            |
+| **Line2 / LineMaterial** | Outline animation for 3D shapes |
 
 ---
 
@@ -75,13 +43,19 @@ The project is now structured in **modular ES modules**, each responsible for a 
 ├── index.html
 ├── style.css
 ├── main.js
+├── app/
+│   ├── initCube.js
+│   └── init3DText.js
 ├── core/
 │   ├── camera.js
 │   ├── controls.js
 │   ├── renderer.js
 │   └── scene.js
 ├── objects/
-│   └── cube.js
+│   ├── cube.js
+│   ├── sphere.js
+│   ├── text.js
+│   └── textOutline.js
 ├── ui/
 │   └── textureSwitcher.js
 ├── public/textures/
@@ -89,7 +63,66 @@ The project is now structured in **modular ES modules**, each responsible for a 
 │   ├── metal.jpg
 │   ├── ice.jpg
 │   └── example.webp
+├── public/font/
+│   └── ChakraPetch-Bold.typeface.json
 ├── jsconfig.json
 ├── package.json
 └── README.md
 ```
+---
+
+## 💡 Recent Update: Animated 3D Text
+
+The latest update introduces a new **Text3D component** that enhances the scene with:
+
+- Modular text group creation using `TextGeometry`
+- Smooth outline drawing via `Line2` with dash animations
+- Timed phases for:
+  - Initial full glow & outline
+  - Fade-out of glow & stroke
+  - Pause phase
+  - Re-draw outline progressively
+  - Fade-in glow and final state
+- Lightweight and reusable function for adding animated text to any scene
+
+The text component can be fully customized and controlled via the main animation loop (`group.userData.update(time)`), enabling seamless integration into any animated sequence.
+
+---
+
+## 🖼️ Visual Behavior Overview
+
+| Phase             | Description                             |
+|------------------|-----------------------------------------|
+| **Start**         | Full glow + outline visible             |
+| **Fade Out**      | Both glow and stroke gradually fade     |
+| **Pause**         | Text remains off briefly                |
+| **Redraw Outline**| Stroke reappears with dash animation    |
+| **Glow Fade-In**  | Emissive glow rises to full intensity   |
+
+---
+
+## 🔄 How to Run
+
+```bash
+# Clone and install
+npm install
+
+# Start dev server
+npm run dev
+```
+
+Open `http://localhost:5173` in your browser.
+
+---
+
+## 🔍 Notes
+
+- All modules follow a single-responsibility structure
+- `update()` functions are used to allow time-based animation in a clean way
+- Ready for future enhancements: reflections, post-processing, custom shaders
+
+---
+
+## 📸 Preview (optional)
+
+Soon ...
