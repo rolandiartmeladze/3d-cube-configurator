@@ -4,7 +4,6 @@ import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 import { createTextOutlines } from './textOutline.js';
 
 export function Text3D({ message = "Roland", fontUrl = "../fonts/ChakraPetch-Bold.typeface.json", onLoad }) {
-
     const group = new THREE.Group();
 
     const loader = new FontLoader();
@@ -26,7 +25,7 @@ export function Text3D({ message = "Roland", fontUrl = "../fonts/ChakraPetch-Bol
         const centerOffset = -0.5 * (textGeo.boundingBox.max.x - textGeo.boundingBox.min.x);
 
         const material = new THREE.MeshPhysicalMaterial({
-            color: 0xffffff,
+            color: 0xaaaaaa,
             transmission: 1.0,
             thickness: 1.0,
             roughness: 0.1,
@@ -36,6 +35,8 @@ export function Text3D({ message = "Roland", fontUrl = "../fonts/ChakraPetch-Bol
             ior: 1.45,
             specularIntensity: 1.0,
             transparent: true,
+            emissive: new THREE.Color(0xaaaaaa),
+            emissiveIntensity: 1,
         });
 
         const textMesh = new THREE.Mesh(textGeo, material);
@@ -43,11 +44,46 @@ export function Text3D({ message = "Roland", fontUrl = "../fonts/ChakraPetch-Bol
         group.add(textMesh);
 
         const outlineGroup = createTextOutlines({ font, message, size: props.size });
-        outlineGroup.position.set(centerOffset, 0, 0.2);
+        outlineGroup.position.set(centerOffset, 0, 0.20);
         group.add(outlineGroup);
 
-        group.userData.update = (t) => {
-            outlineGroup.userData.update?.(t);
+        const initialDisplayDuration = 2000;
+        const fadeOutDuration = 1500;
+        const pauseDuration = 1000;
+        const fadeInDuration = 2500;
+        const finalPauseDuration = 1000;
+
+        const fullCycle = initialDisplayDuration + fadeOutDuration + pauseDuration + fadeInDuration + finalPauseDuration;
+
+        group.userData.update = (time) => {
+            const t = time % fullCycle;
+
+            if (t < initialDisplayDuration) {
+                outlineGroup.visible = true;
+                outlineGroup.userData.update?.(1);
+                textMesh.material.emissiveIntensity = 1;
+
+            } else if (t < initialDisplayDuration + fadeOutDuration) {
+                const progress = (t - initialDisplayDuration) / fadeOutDuration;
+                outlineGroup.visible = true;
+                outlineGroup.userData.update?.(1 - progress);
+                textMesh.material.emissiveIntensity = 1 - progress;
+
+            } else if (t < initialDisplayDuration + fadeOutDuration + pauseDuration) {
+                outlineGroup.visible = false;
+                textMesh.material.emissiveIntensity = 0;
+
+            } else if (t < initialDisplayDuration + fadeOutDuration + pauseDuration + fadeInDuration) {
+                const progress = (t - initialDisplayDuration - fadeOutDuration - pauseDuration) / fadeInDuration;
+                outlineGroup.visible = true;
+                outlineGroup.userData.update?.(progress);
+                textMesh.material.emissiveIntensity = progress;
+
+            } else {
+                outlineGroup.visible = true;
+                outlineGroup.userData.update?.(1);
+                textMesh.material.emissiveIntensity = 1;
+            }
         };
 
         onLoad?.(group);

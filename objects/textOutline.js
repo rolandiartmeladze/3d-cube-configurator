@@ -12,8 +12,8 @@ export function createTextOutlines({ font, message = "Roland", size = 3 }) {
 
     const strokeMeshes = [];
 
-    shapes.forEach((shape, index) => {
-        let totalDist = 1.0;
+    shapes.forEach((shape) => {
+        const totalDist = shape.getLength();
 
         const lineMaterial = new LineMaterial({
             color: 0xffffff,
@@ -21,7 +21,7 @@ export function createTextOutlines({ font, message = "Roland", size = 3 }) {
             dashed: true,
             dashSize: totalDist * 2,
             gapSize: totalDist * 2,
-            dashOffset: Math.random() * totalDist,
+            dashOffset: 0,
             depthTest: false,
             transparent: true,
             opacity: 1,
@@ -37,9 +37,8 @@ export function createTextOutlines({ font, message = "Roland", size = 3 }) {
         const line = new Line2(lineGeo, lineMaterial);
         line.computeLineDistances();
 
-        const offset = index * 0.05;
-        line.userData.update = (time) => {
-            line.material.dashOffset = time * (totalDist * 0.001) + offset;
+        line.userData.update = (progress) => {
+            line.material.dashOffset = -totalDist + (progress * totalDist);
         };
 
         group.add(line);
@@ -47,6 +46,7 @@ export function createTextOutlines({ font, message = "Roland", size = 3 }) {
 
         if (shape.holes?.length > 0) {
             shape.holes.forEach((hole) => {
+                const holeLength = hole.getLength();
                 const holePoints = hole.getPoints(64);
                 const holePos = holePoints.flatMap(p => [p.x, p.y, 0]);
 
@@ -54,16 +54,16 @@ export function createTextOutlines({ font, message = "Roland", size = 3 }) {
                 holeGeo.setPositions(holePos);
 
                 const holeMaterial = lineMaterial.clone();
+                holeMaterial.dashSize = holeLength * 2;
+                holeMaterial.gapSize = holeLength * 2;
+                holeMaterial.dashOffset = 0;
                 holeMaterial.resolution.set(width, height);
 
                 const holeLine = new Line2(holeGeo, holeMaterial);
                 holeLine.computeLineDistances();
 
-                const holeLength = hole.getLength();
-                const holeOffset = index * 0.05;
-
-                holeLine.userData.update = (time) => {
-                    holeLine.material.dashOffset = time * (holeLength * 0.001) + holeOffset;
+                holeLine.userData.update = (progress) => {
+                    holeLine.material.dashOffset = -holeLength + (progress * holeLength);
                 };
 
                 group.add(holeLine);
@@ -72,8 +72,8 @@ export function createTextOutlines({ font, message = "Roland", size = 3 }) {
         }
     });
 
-    group.userData.update = (time) => {
-        strokeMeshes.forEach(mesh => mesh.userData.update?.(time));
+    group.userData.update = (progress) => {
+        strokeMeshes.forEach(mesh => mesh.userData.update?.(progress));
     };
 
     return group;
