@@ -3,11 +3,13 @@ import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 import { createTextOutlines } from './textOutline.js';
 
+// Creates and animates the 3D text with glowing and outline effects
 export function Text3D({ message = "Roland", fontUrl = "../fonts/ChakraPetch-Bold.typeface.json", onLoad }) {
     const group = new THREE.Group();
 
     const loader = new FontLoader();
     loader.load(fontUrl, (font) => {
+        // Text shape and geometry settings
         const props = {
             font,
             size: 1,
@@ -24,6 +26,7 @@ export function Text3D({ message = "Roland", fontUrl = "../fonts/ChakraPetch-Bol
         textGeo.computeBoundingBox();
         const centerOffset = -0.5 * (textGeo.boundingBox.max.x - textGeo.boundingBox.min.x);
 
+        // Physical material with glass and light effects
         const material = new THREE.MeshPhysicalMaterial({
             color: 0xaaaaaa,
             transmission: 1.0,
@@ -43,10 +46,12 @@ export function Text3D({ message = "Roland", fontUrl = "../fonts/ChakraPetch-Bol
         textMesh.position.x = centerOffset;
         group.add(textMesh);
 
+        // Create the text outline (stroke)
         const outlineGroup = createTextOutlines({ font, message, size: props.size });
         outlineGroup.position.set(centerOffset, 0, 0.20);
         group.add(outlineGroup);
 
+        // Phase durations in milliseconds
         const initialDisplayDuration = 2000;
         const fadeOutDuration = 1500;
         const pauseDuration = 1000;
@@ -55,37 +60,44 @@ export function Text3D({ message = "Roland", fontUrl = "../fonts/ChakraPetch-Bol
 
         const fullCycle = initialDisplayDuration + fadeOutDuration + pauseDuration + fadeInDuration + finalPauseDuration;
 
+        // Animation update logic
         group.userData.update = (time) => {
             const t = time % fullCycle;
 
             if (t < initialDisplayDuration) {
+                // Show full glow and full outline at load
                 outlineGroup.visible = true;
                 outlineGroup.userData.update?.(1);
                 textMesh.material.emissiveIntensity = 1;
 
             } else if (t < initialDisplayDuration + fadeOutDuration) {
+                // Fade out both outline and glow
                 const progress = (t - initialDisplayDuration) / fadeOutDuration;
                 outlineGroup.visible = true;
                 outlineGroup.userData.update?.(1 - progress);
                 textMesh.material.emissiveIntensity = 1 - progress;
 
             } else if (t < initialDisplayDuration + fadeOutDuration + pauseDuration) {
+                // Pause with outline off and glow off
                 outlineGroup.visible = false;
                 textMesh.material.emissiveIntensity = 0;
 
             } else if (t < initialDisplayDuration + fadeOutDuration + pauseDuration + fadeInDuration) {
+                // Animate outline drawing, glow appears gradually
                 const progress = (t - initialDisplayDuration - fadeOutDuration - pauseDuration) / fadeInDuration;
                 outlineGroup.visible = true;
                 outlineGroup.userData.update?.(progress);
                 textMesh.material.emissiveIntensity = progress;
 
             } else {
+                // Final state: fully visible outline + glow
                 outlineGroup.visible = true;
                 outlineGroup.userData.update?.(1);
                 textMesh.material.emissiveIntensity = 1;
             }
         };
 
+        // Pass back the group when ready
         onLoad?.(group);
     });
 

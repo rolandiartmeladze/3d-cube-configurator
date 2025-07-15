@@ -3,6 +3,7 @@ import { Line2 } from 'three/examples/jsm/lines/Line2.js';
 import { LineMaterial } from 'three/examples/jsm/lines/LineMaterial.js';
 import { LineGeometry } from 'three/examples/jsm/lines/LineGeometry.js';
 
+// Creates outlined strokes around each letter of the 3D text
 export function createTextOutlines({ font, message = "Roland", size = 3 }) {
     const group = new THREE.Group();
     const shapes = font.generateShapes(message, size);
@@ -15,6 +16,7 @@ export function createTextOutlines({ font, message = "Roland", size = 3 }) {
     shapes.forEach((shape) => {
         const totalDist = shape.getLength();
 
+        // Material for the dashed line
         const lineMaterial = new LineMaterial({
             color: 0xffffff,
             linewidth: 1,
@@ -28,6 +30,7 @@ export function createTextOutlines({ font, message = "Roland", size = 3 }) {
         });
         lineMaterial.resolution.set(width, height);
 
+        // Create line geometry from shape points
         const points = shape.getPoints(64);
         const positions = points.flatMap(p => [p.x, p.y, 0]);
 
@@ -37,6 +40,7 @@ export function createTextOutlines({ font, message = "Roland", size = 3 }) {
         const line = new Line2(lineGeo, lineMaterial);
         line.computeLineDistances();
 
+        // Animation progress update (0 = hidden, 1 = full)
         line.userData.update = (progress) => {
             line.material.dashOffset = -totalDist + (progress * totalDist);
         };
@@ -44,6 +48,7 @@ export function createTextOutlines({ font, message = "Roland", size = 3 }) {
         group.add(line);
         strokeMeshes.push(line);
 
+        // If shape has holes (like 'O'), also outline those
         if (shape.holes?.length > 0) {
             shape.holes.forEach((hole) => {
                 const holeLength = hole.getLength();
@@ -72,6 +77,7 @@ export function createTextOutlines({ font, message = "Roland", size = 3 }) {
         }
     });
 
+    // Global update for all lines
     group.userData.update = (progress) => {
         strokeMeshes.forEach(mesh => mesh.userData.update?.(progress));
     };
