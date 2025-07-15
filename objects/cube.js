@@ -5,7 +5,7 @@ const textureLoader = new THREE.TextureLoader();
 const faceColors = [0xff0000, 0x00ff00, 0x0000ff, 0xffff00, 0xff00ff, 0x00ffff];
 const colorMaterials = faceColors.map(color => new THREE.MeshStandardMaterial({ color }));
 
-const geometry = new THREE.BoxGeometry(1, 1, 1);
+const geometry = new THREE.BoxGeometry(3, 3, 3);
 export const cube = new THREE.Mesh(geometry, colorMaterials);
 
 const textures = {
