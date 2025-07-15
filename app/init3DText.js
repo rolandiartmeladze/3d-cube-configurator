@@ -27,6 +27,7 @@ export function initText() {
 
     function animate(time) {
         getSphere.userData.update(time);
+        textGroup.userData.update?.(time);
         controls.update();
         renderer.render(scene, camera);
     }
