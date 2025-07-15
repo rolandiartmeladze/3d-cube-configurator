@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
-import { createTextOutlines } from './textOutline';
+import { createTextOutlines } from './textOutline.js';
 
 export function Text3D({ message = "Roland", fontUrl = "../fonts/ChakraPetch-Bold.typeface.json", onLoad }) {
 
@@ -42,8 +42,8 @@ export function Text3D({ message = "Roland", fontUrl = "../fonts/ChakraPetch-Bol
         textMesh.position.x = centerOffset;
         group.add(textMesh);
 
-        const outlineGroup = createTextOutlines({ font, message, size });
-        outlineGroup.position.set(centerOffset, 0, 0.15);
+        const outlineGroup = createTextOutlines({ font, message, size: props.size });
+        outlineGroup.position.set(centerOffset, 0, 0.2);
         group.add(outlineGroup);
 
         group.userData.update = (t) => {
