@@ -3,13 +3,17 @@ import { initCube } from './app/initCube.js';
 import { initText } from './app/init3DText.js';
 
 function menuOpen() {
-  const menuBtn = document.querySelector("#hamburg-menu");
+    const menuBtn = document.querySelector("#hamburg-menu");
+    const sidebar = document.getElementById("sidebar");
+    if (!menuBtn || !sidebar) return;
+    let isOpen = false;
 
-  if (!menuBtn) return;
-
-  menuBtn.addEventListener("click", () => {
-    menuBtn.classList.toggle("hamburg-open");
-  });
+    menuBtn.addEventListener("click", () => {
+        isOpen = !isOpen;
+        menuBtn.classList.toggle("hamburg-open", isOpen);
+        sidebar.classList.toggle("sidebar-open", isOpen);
+        sidebar.classList.toggle("hidden", !isOpen);
+    });
 }
 
 menuOpen();

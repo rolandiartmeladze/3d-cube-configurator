@@ -7,12 +7,10 @@ body {
 }
 
 #hamburg-menu {
-  @apply absolute flex flex-col transition-all duration-500 cursor-pointer p-2 justify-evenly items-center top-1 right-2 size-12 bg-gray-600/50 border-2 rounded-md lg:hidden;
+  @apply fixed top-4 right-4 z-50 cursor-pointer p-2 flex flex-col justify-evenly items-center w-12 h-12 rounded-md bg-gray-600/50 border-2 transition-all duration-300 lg:hidden;
 }
 
-#hamburg-line1,
-#hamburg-line2,
-#hamburg-line3 {
+.hamburg-line {
   @apply w-[80%] h-1 bg-red-800 rounded-md transition-all duration-300 origin-center;
 }
 
@@ -26,4 +24,12 @@ body {
 
 .hamburg-open #hamburg-line3 {
   @apply -rotate-45;
+}
+
+#sidebar {
+  @apply hidden flex-col gap-4 w-full lg:w-[30%] h-screen p-8 bg-[burlywood] overflow-y-auto transition-all duration-300 z-40;
+}
+
+.sidebar-open {
+  @apply !flex fixed top-0 left-0 w-full h-screen;
 }
