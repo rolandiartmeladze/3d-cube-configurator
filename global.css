@@ -5,3 +5,25 @@
 body {
   @apply bg-gray-900 text-white;
 }
+
+#hamburg-menu {
+  @apply absolute flex flex-col transition-all duration-500 cursor-pointer p-2 justify-evenly items-center top-1 right-2 size-12 bg-gray-600/50 border-2 rounded-md lg:hidden;
+}
+
+#hamburg-line1,
+#hamburg-line2,
+#hamburg-line3 {
+  @apply w-[80%] h-1 bg-red-800 rounded-md transition-all duration-300 origin-center;
+}
+
+.hamburg-open #hamburg-line1 {
+  @apply rotate-45;
+}
+
+.hamburg-open #hamburg-line2 {
+  @apply opacity-0;
+}
+
+.hamburg-open #hamburg-line3 {
+  @apply -rotate-45;
+}
