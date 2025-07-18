@@ -2,7 +2,7 @@ import { createScene } from '../core/scene.js';
 import { createCamera } from '../core/camera.js';
 import { createRenderer } from '../core/renderer.js';
 import { createControls } from '../core/controls.js';
-import { cube, updateCubeMaterial } from '../objects/cube.js';
+import { cube, updateCubeMaterial, updateCubeSize } from '../objects/cube.js';
 import { setupTextureSwitcher } from '../ui/textureSwitcher.js';
 
 export function initCube() {
@@ -33,4 +33,5 @@ export function initCube() {
     renderer.setAnimationLoop(animate);
 
     setupTextureSwitcher(updateCubeMaterial);
+    updateCubeSize(cube);
 }
