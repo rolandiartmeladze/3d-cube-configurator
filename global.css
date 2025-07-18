@@ -27,6 +27,9 @@ body {
 .hamburg-open #hamburg-line3 {
   @apply -rotate-45 translate-x-0 -translate-y-2;  
 }
+.label {
+  @apply text-sm lg:text-xl font-black text-black;
+}
 
 #sidebar {
   @apply hidden lg:flex lg:relative flex-col gap-4 w-full  lg:w-[30%] h-screen p-8 bg-[#4d4c4c] lg:bg-[#70333bcc] overflow-y-auto transition-all duration-300 z-40;

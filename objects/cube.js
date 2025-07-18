@@ -1,5 +1,7 @@
 import * as THREE from 'three';
 
+export let rotationSpeed = 0.01;
+
 const textureLoader = new THREE.TextureLoader();
 
 const faceColors = [0xff0000, 0x00ff00, 0x0000ff, 0xffff00, 0xff00ff, 0x00ffff];
@@ -41,9 +43,26 @@ export function updateCubeSize(cube) {
       size = [0.5, 0.5, 0.5];
     } else if (selected === "xl") {
       size = [1.5, 1.5, 1.5];
-    } else if(selected == "normal") {
+    } else if (selected == "normal") {
       size = [1, 1, 1];
     }
     cube.scale.set(...size);
   })
+}
+
+
+export function setupSpeedControl() {
+  const speedSelect = document.getElementById("speedSelect");
+
+  speedSelect.addEventListener("change", (event) => {
+    const value = event.target.value;
+
+    if (value === "sm") {
+      rotationSpeed = 0.08;
+    } else if (value === "xl") {
+      rotationSpeed = 0.15;
+    } else {
+      rotationSpeed = 0.01;
+    }
+  });
 }

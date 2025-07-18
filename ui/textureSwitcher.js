@@ -2,7 +2,7 @@ const textureSelect = document.querySelector('#textureSelect');
 const texturePreview = document.getElementById('texturePreview');
 
 const material = {
-  colos: '/textures/example.webp',
+  colros: '/textures/example.webp',
   wood: '/textures/wood.jpg',
   metal: '/textures/metal.jpg',
   ice: '/textures/ice.jpg',
