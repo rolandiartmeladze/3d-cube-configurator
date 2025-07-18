@@ -7,27 +7,29 @@ body {
 }
 
 #hamburg-menu {
-  @apply fixed top-4 right-4 z-50 cursor-pointer p-2 flex flex-col justify-evenly items-center w-12 h-12 rounded-md bg-gray-600/50 border-2 transition-all duration-300 lg:hidden;
+  @apply fixed top-4 right-4 z-50 cursor-pointer p-2 flex flex-col justify-evenly items-center size-12 rounded-md bg-gray-600/50 border-2 transition-all duration-500 lg:hidden;
 }
 
 .hamburg-line {
   @apply w-[80%] h-1 bg-red-800 rounded-md transition-all duration-300 origin-center;
 }
-
 .hamburg-open #hamburg-line1 {
-  @apply rotate-45;
+  @apply rotate-45 translate-x-0 translate-y-2;
 }
 
 .hamburg-open #hamburg-line2 {
   @apply opacity-0;
 }
+.hamburg-open {
+  @apply rounded-full;
+}
 
 .hamburg-open #hamburg-line3 {
-  @apply -rotate-45;
+  @apply -rotate-45 translate-x-0 -translate-y-2;  
 }
 
 #sidebar {
-  @apply hidden flex-col gap-4 w-full lg:w-[30%] h-screen p-8 bg-[burlywood] overflow-y-auto transition-all duration-300 z-40;
+  @apply hidden lg:flex lg:relative flex-col gap-4 w-full  lg:w-[30%] h-screen p-8 bg-[#4d4c4c] lg:bg-[#70333bcc] overflow-y-auto transition-all duration-300 z-40;
 }
 
 .sidebar-open {

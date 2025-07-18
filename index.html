@@ -5,82 +5,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>3D Cube Configurator</title>
   </head>
-  <body
-    class="w-full h-full m-0 p-0 overflow-hidden bg-black text-white font-sans"
-  >
+  <body class="w-full h-full m-0 p-0 overflow-hidden bg-black text-white font-sans">
     <div class="flex flex-col-reverse lg:flex-row w-full h-screen">
       <div class="flex flex-col w-full lg:w-[70%] h-full p-8 gap-4">
         <div class="h-64 w-full p=0 flex justify-center items-center">
           <canvas id="text" class="!w-full !h-full block">3D Text</canvas>
         </div>
-
-        <div
-          class="flex-1 w-full border border-white rounded-xl overflow-hidden"
-        >
+        <div class="flex-1 w-full border border-white rounded-xl overflow-hidden">
           <canvas id="cube" class="!w-full !h-full block"></canvas>
         </div>
       </div>
-<div id="hamburg-menu">
-  <span id="hamburg-line1" class="hamburg-line"></span>
-  <span id="hamburg-line2" class="hamburg-line"></span>
-  <span id="hamburg-line3" class="hamburg-line"></span>
-</div>
 
-<aside id="sidebar">
-<div id="config-container">
-        <h1 class="text-2xl font-bold">Configuration details</h1>
+      <div id="hamburg-menu">
+        <span id="hamburg-line1" class="hamburg-line"></span>
+        <span id="hamburg-line2" class="hamburg-line"></span>
+        <span id="hamburg-line3" class="hamburg-line"></span>
+      </div>
 
-        <div
-          class="w-full p-4 mt-10 bg-white/80 backdrop-blur-md rounded-2xl shadow-md text-gray-800"
-        >
-          <div class="flex justify-between items-center mb-4">
-            <h2 class="text-lg font-semibold">You Mode</h2>
-            <button class="text-lg text-gray-600 hover:text-gray-800">
-              Setting
-            </button>
-          </div>
+      <aside id="sidebar" class="sidebar-open">
+        <div id="config-container">
+          <h1 class="text-2xl font-bold">Configuration details</h1>
+          <div class="w-full relative p-4 mt-10 bg-white/80 backdrop-blur-md rounded-md lg:rounded-2xl shadow-md text-gray-800">
+            <div class="flex justify-between items-center mb-4">
+              <h2 class="text-lg font-semibold">You Mode</h2>
+              <button class="text-lg text-gray-600 hover:text-gray-800">Setting</button>
+            </div>
 
-          <div class="flex flex-col gap-2 mt-4">
-            <label for="textureSelect" class="text-sm font-medium"
-              >Textures</label
-            >
-            <select
-              id="textureSelect"
-              class="p-2 rounded-lg border border-gray-300 bg-white text-sm"
-            >
-              <option value="none">None</option>
-              <option value="wood">Wood</option>
-              <option value="metal">Metal</option>
-              <option value="ice">Ice</option>
-            </select>
-          </div>
+            <h3 class="text-2xl font-black inline-block p-2 pb-0 border-b-2 rounded-b-lg border-red-600">Cube Details</h3>
 
-          <div
-            class="mt-4 flex items-center gap-3 border border-gray-300 rounded-lg bg-gray-100 p-2 shadow-inner"
-          >
-            <img
-              id="texturePreview"
-              src="/textures/example.webp"
-              alt="Colors Texture"
-              class="w-10 h-10 object-cover rounded border border-gray-400"
-            />
-            <span class="text-sm font-medium">Colors Texture</span>
-          </div>
+            <div class="flex flex-row gap-3 justify-start items-stretch">
+              <div class="flex flex-col gap-2 mt-4 justify-start items-start max-w-sm">
+                <label for="textureSelect" class="text-sm font-black border-b border-b-red-600">Select Textures</label>
+                <div class="w-auto flex flex-row items-stretch gap-0">
+                  <div class="flex items-center gap-3 bg-white p-1 rounded-s-md">
+                    <img id="texturePreview" src="/textures/example.webp" alt="Colors Texture" class="w-10 h-10 object-cover rounded border border-gray-400" />
+                  </div>
+                  <select id="textureSelect" class="h-12 py-2 pr-4 cursor-pointer outline-none font-black text-sm bg-white rounded-e-md">
+                    <option value="colors">colors</option>
+                    <option value="wood">Wood</option>
+                    <option value="metal">Metal</option>
+                    <option value="ice">Ice</option>
+                  </select>
+                </div>
+              </div>
 
-          <div class="flex flex-col gap-2 mt-4">
-            <label for="sizeSlider" class="text-sm font-medium">Size</label>
-            <input
-              id="sizeSlider"
-              type="range"
-              min="1"
-              max="100"
-              value="50"
-              class="mt-2"
-            />
+              <div class="flex flex-col gap-2 mt-4 justify-start items-start max-w-sm">
+                <label for="sizeselect" class="text-sm font-black border-b border-b-red-600">Select Size</label>
+                <select id="sizeSelect" class="h-12 p-2 rounded-md cursor-pointer outline-none font-black text-sm bg-white">
+                  <option value="normal">normal</option>
+                  <option value="sm">sm</option>
+                  <option value="xl">xl</option>
+                </select>
+              </div>
+            </div>
           </div>
         </div>
-      </aside>      
-    </div>
+      </aside>
     </div>
 
     <script type="module" src="main.js" defer></script>
