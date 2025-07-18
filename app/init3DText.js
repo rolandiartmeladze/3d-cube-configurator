@@ -7,13 +7,22 @@ import { Text3D } from '../objects/text.js';
 
 export function initText() {
     const canvas = document.querySelector('#text');
+    const slider = document.querySelector('#colorSlider');
+    const startAnimation = document.getElementById("reset");
+
     const scene = createScene();
     const renderer = createRenderer(canvas);
     const camera = createCamera(canvas.clientWidth / canvas.clientHeight);
     const controls = createControls(camera, renderer);
 
-    const getSphere = sphere({ hue: 0.55 });
+    const getSphere = sphere();
     scene.add(getSphere);
+
+    slider.addEventListener('input', (e) => {
+        const hue = parseFloat(e.target.value) / 100;
+        getSphere.userData.setHue(hue);
+        startAnimation.classList.add("bg-red-600/60")
+    });
 
     let textGroup = null;
 

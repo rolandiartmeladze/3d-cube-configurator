@@ -1,24 +1,11 @@
 const textureSelect = document.querySelector('#textureSelect');
 const texturePreview = document.getElementById('texturePreview');
-const textureLabel = document.getElementById('textureLabel');
 
-const previewInfo = {
-  none: {
-    src: '/textures/example.webp',
-    label: 'Colors Texture',
-  },
-  wood: {
-    src: '/textures/wood.jpg',
-    label: 'Wood Texture',
-  },
-  metal: {
-    src: '/textures/metal.jpg',
-    label: 'Metal Texture',
-  },
-  ice: {
-    src: '/textures/ice.jpg',
-    label: 'Ice Texture',
-  },
+const material = {
+  colros: '/textures/example.webp',
+  wood: '/textures/wood.jpg',
+  metal: '/textures/metal.jpg',
+  ice: '/textures/ice.jpg',
 };
 
 export function setupTextureSwitcher(onTextureChange) {
@@ -27,10 +14,9 @@ export function setupTextureSwitcher(onTextureChange) {
 
     onTextureChange(selected);
 
-    const preview = previewInfo[selected];
-    if (preview) {
-      texturePreview.src = preview.src;
-      textureLabel.textContent = preview.label;
+    const selectedMaterial = material[selected];
+    if (selectedMaterial) {
+      texturePreview.src = selectedMaterial;
     }
   });
 }
