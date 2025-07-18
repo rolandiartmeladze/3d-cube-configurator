@@ -5,13 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>3D Cube Configurator</title>
   </head>
-  <body class="w-full h-full m-0 p-0 overflow-hidden bg-black text-white font-sans">
+  <body
+    class="w-full h-full m-0 p-0 overflow-hidden bg-black text-white font-sans"
+  >
     <div class="flex flex-col-reverse lg:flex-row w-full h-screen">
-      <div class="flex-grow flex flex-col w-full h-screen lg:w-[70%] lg:h-full p-8 gap-4">
+      <div
+        class="flex-grow flex flex-col w-full h-screen lg:w-[70%] lg:h-full p-8 gap-4"
+      >
         <div class="flex-1 lg:h-64 w-full p=0 flex justify-center items-center">
           <canvas id="text" class="!w-full !h-full block">3D Text</canvas>
         </div>
-        <div class="flex-1 w-full border border-white rounded-xl overflow-hidden">
+        <div
+          class="flex-1 w-full border border-white rounded-xl overflow-hidden"
+        >
           <canvas id="cube" class="!w-full !h-full block"></canvas>
         </div>
       </div>
@@ -25,48 +31,91 @@
       <aside id="sidebar" class="sidebar-open">
         <div id="config-container">
           <h1 class="text-2xl font-bold">Configuration details</h1>
-          <div class="w-full relative p-4 mt-10 bg-white/80 backdrop-blur-md rounded-md lg:rounded-2xl shadow-md text-gray-800">
+          <div
+            class="w-full relative p-4 mt-10 bg-white/80 backdrop-blur-md rounded-md lg:rounded-2xl shadow-md text-gray-800"
+          >
             <div class="flex justify-between items-center mb-4">
               <h2 class="text-lg font-semibold">You Mode</h2>
-              <button class="text-lg text-gray-600 hover:text-gray-800">Setting</button>
+              <button class="text-lg text-gray-600 hover:text-gray-800">
+                Setting
+              </button>
             </div>
 
-            <h3 class="text-2xl font-black inline-block p-2 pb-0 border-b-2 border-red-600">Cube Details</h3>
+            <h3
+              class="text-2xl font-black inline-block p-2 pb-0 border-b-2 border-red-600"
+            >
+              Spher Details
+            </h3>
+            <div class="flex flex-col gap-2 mt-4">
+              <div>
+                <label for="colorSlider" class="label">Set Color</label>
+                <span id="reset" class="rounded-md text-black cursor-pointer p-1 bg-gray-700/60">reset</span>
+              </div>
+              <input
+                id="colorSlider"
+                type="range"
+                min="1"
+                max="100"
+                value="50"
+                class="mt-2"
+              />
+            </div>
 
-<div class="flex flex-wrap gap-3 mt-6 items-start">
-  <div class="flex flex-col gap-2 max-w-xs">
-    <label for="textureSelect" class="label">Textures</label>
-    <div class="flex items-center rounded-md overflow-hidden bg-white shadow">
-      <div class="p-1">
-        <img id="texturePreview" src="/textures/example.webp" alt="Colors Texture" class="w-12 h-12 object-cover rounded-md" />
-      </div>
-      <select id="textureSelect" class="h-12 px-4 pl-0 bg-transparent outline-none text-sm font-bold cursor-pointer">
-        <option value="colors">Colors</option>
-        <option value="wood">Wood</option>
-        <option value="metal">Metal</option>
-        <option value="ice">Ice</option>
-      </select>
-    </div>
-  </div>
+            <h3
+              class="text-2xl font-black inline-block p-2 pb-0 border-b-2 border-red-600"
+            >
+              Cube Details
+            </h3>
+            <div class="flex flex-wrap gap-3 mt-6 items-start">
+              <div class="flex flex-col gap-2 max-w-xs">
+                <label for="textureSelect" class="label">Textures</label>
+                <div
+                  class="flex items-center rounded-md overflow-hidden bg-white shadow"
+                >
+                  <div class="p-1">
+                    <img
+                      id="texturePreview"
+                      src="/textures/example.webp"
+                      alt="Colors Texture"
+                      class="w-12 h-12 object-cover rounded-md"
+                    />
+                  </div>
+                  <select
+                    id="textureSelect"
+                    class="h-12 px-4 pl-0 bg-transparent outline-none text-sm font-bold cursor-pointer"
+                  >
+                    <option value="colors">Colors</option>
+                    <option value="wood">Wood</option>
+                    <option value="metal">Metal</option>
+                    <option value="ice">Ice</option>
+                  </select>
+                </div>
+              </div>
 
-  <div class="flex flex-col gap-2 max-w-xs">
-    <label for="sizeSelect" class="label">Size</label>
-    <select id="sizeSelect" class="h-12 px-4 bg-white rounded-md shadow outline-none text-sm font-bold cursor-pointer">
-      <option value="normal">Normal</option>
-      <option value="sm">Sm</option>
-      <option value="xl">Xl</option>
-    </select>
-  </div>
+              <div class="flex flex-col gap-2 max-w-xs">
+                <label for="sizeSelect" class="label">Size</label>
+                <select
+                  id="sizeSelect"
+                  class="h-12 px-4 bg-white rounded-md shadow outline-none text-sm font-bold cursor-pointer"
+                >
+                  <option value="normal">Normal</option>
+                  <option value="sm">Sm</option>
+                  <option value="xl">Xl</option>
+                </select>
+              </div>
 
-  <div class="flex flex-col gap-2 max-w-xs">
-    <label for="speedSelect" class="label">Speed</label>
-    <select id="speedSelect" class="h-12 px-4 bg-white rounded-md shadow outline-none text-sm font-bold cursor-pointer">
-      <option value="normal">1X</option>
-      <option value="sm">2X</option>
-      <option value="xl">3X</option>
-    </select>
-  </div>
-</div>
+              <div class="flex flex-col gap-2 max-w-xs">
+                <label for="speedSelect" class="label">Speed</label>
+                <select
+                  id="speedSelect"
+                  class="h-12 px-4 bg-white rounded-md shadow outline-none text-sm font-bold cursor-pointer"
+                >
+                  <option value="normal">1X</option>
+                  <option value="sm">2X</option>
+                  <option value="xl">3X</option>
+                </select>
+              </div>
+            </div>
           </div>
         </div>
       </aside>
