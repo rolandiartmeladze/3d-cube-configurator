@@ -4,8 +4,11 @@ This web-based application provides an interactive 3D visualization tool for con
 
 ---
 
-https://3d-cube-configurator.vercel.app/
+## 🚀 Live Demo
 
+👉 Click Here: [3D Cube Configurator](https://3d-cube-configurator.vercel.app)
+
+## 📸 Preview (optional)
 ![video-gif](https://github.com/user-attachments/assets/a0d22db0-135b-422a-9eb2-50add7dac3ad)
 
 
@@ -127,7 +130,3 @@ Open `http://localhost:5173` in your browser.
 - Ready for future enhancements: reflections, post-processing, custom shaders
 
 ---
-
-## 📸 Preview (optional)
-
-Soon ...
