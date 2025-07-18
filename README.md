@@ -4,6 +4,11 @@ This web-based application provides an interactive 3D visualization tool for con
 
 ---
 
+https://3d-cube-configurator.vercel.app/
+
+![video-gif](https://github.com/user-attachments/assets/a0d22db0-135b-422a-9eb2-50add7dac3ad)
+
+
 ## 🚀 Features
 
 ### 🧱 Core 3D Elements
